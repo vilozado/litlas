@@ -6,9 +6,10 @@
 }
 
 .modal-content {
+  padding: 1rem;
   position: fixed;
-  background: white;
-  width: 35rem;
+  background: #F8F7F4;
+  width: 40rem;
   height: auto;
   top: 40%;
   left: 50%;
@@ -18,4 +19,27 @@
   align-items: center;
   border-radius: 20px;
   z-index: 2001;
+}
+
+.modal-body,
+.modal-head {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.btn-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#close-btn {
+  align-self: flex-end;
+  background-color: transparent;
+  color: #1F5E57;
+  font-weight: 600;
+  font-size: 1rem;
 }

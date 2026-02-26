@@ -1,4 +1,4 @@
-import type { LiteratureTradition } from "./types/LiteratureTradition";
+import type { LiteratureTradition } from "../types/literatureTradition";
 
 const countryLiteratureMap: Record<string, LiteratureTradition> = {
   "Russia": { subject: "russian literature", label: "Russian Literature" },

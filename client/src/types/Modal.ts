@@ -1,6 +1,9 @@
-import type { ReactElement } from "react";
+
+import type { Book } from "./book";
 
 export interface Modal {
   open: boolean,
-  onClose: () => void
+  onClose: () => void,
+  country: string | null,
+  books: Book[]
 }
