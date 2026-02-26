@@ -1,3 +1,7 @@
 path.leaflet-interactive:focus {
   outline: none;
 }
+
+.leaflet-container {
+  background-color: #f8f7f4 !important;
+}

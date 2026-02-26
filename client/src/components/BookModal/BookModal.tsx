@@ -2,25 +2,21 @@ import type { Modal } from "../../types/modal"
 import { createPortal } from "react-dom"
 import './BookModal.css'
 import { useState, useEffect } from "react";
+import { useBookContext } from "../../context/bookContext";
 
 export default function BookModal(props: Modal) {
 
+  const { selectedBooks, selectedCountry, addToReadingList } = useBookContext();
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const randomBook = Math.floor(Math.random() * props.books.length);
-  const currentBook = props.books[currentIndex];
-
   useEffect(() => {
-    setCurrentIndex(randomBook)
-  }, [props.country]);
+    setCurrentIndex(Math.floor(Math.random() * selectedBooks.length))
+  }, [selectedCountry]);
 
+  const currentBook = selectedBooks[currentIndex];
 
   const handleNext = () => {
-    console.log('books length: ', props.books.length);
-    console.log('current index: ', currentIndex);
-    console.log('currentBook:', currentBook)
-
-    setCurrentIndex(prev => (prev + 1) % props.books.length)
+    setCurrentIndex(prev => (prev + 1) % selectedBooks.length)
   }
 
   if (!props.open) return null;
@@ -29,7 +25,7 @@ export default function BookModal(props: Modal) {
     <div className="modal-overlay" onClick={props.onClose}>
       <div className="modal-content" onClick={(e => e.stopPropagation())}>
         <div className="modal-head">
-          <h1>{props.country}</h1>
+          <h1>{selectedCountry}</h1>
           <button type="button" id="close-btn" onClick={props.onClose}>
             X
           </button>
@@ -50,7 +46,7 @@ export default function BookModal(props: Modal) {
           }
         </div>
         <div className="btn-container">
-          <button type="button" id="tbr-btn">
+          <button type="button" id="tbr-btn" onClick={() => currentBook && addToReadingList}>
             Add to My Reading List
           </button>
           <button type="button" id="next-btn" onClick={handleNext}>

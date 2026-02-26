@@ -1,15 +1,14 @@
 import './App.css'
-import { useEffect, useState } from 'react';
 import Nav from './components/Nav/Nav';
 import Map from './components/Map/Map';
-
+import SidebarList from './components/SidebarList/SidebarList';
 
 function App() {
-
   return (
     <>
       <Nav />
       <Map />
+      <SidebarList />
     </>
   )
 }
