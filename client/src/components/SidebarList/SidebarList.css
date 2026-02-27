@@ -15,14 +15,5 @@
   align-items: center;
   list-style: none;
   margin: 1rem;
-}
-
-.sidebar-cover {
-  height: 22rem;
-  width: 15rem;
-  border-radius: 5px;
-}
-
-.sidebar-info {
-  display: flex;
+  padding: 0;
 }

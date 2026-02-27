@@ -1,3 +1,5 @@
+export type BookStatus = 'to be read' | 'read';
+
 export interface Book {
   id: string,
   subject: string,
@@ -7,4 +9,8 @@ export interface Book {
   description: string | null
   categories: string[],
   thumbnail: string,
+}
+
+export interface SavedBook extends Book {
+  status: BookStatus
 }

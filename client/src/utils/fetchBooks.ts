@@ -1,6 +1,6 @@
 import mockBooks from '../../mocks/mockBooks.json';
 import type { Book } from '../types/book';
-import type { GoogleBooksItem, GoogleBooksResponse } from '../types/googleBooksRes';
+import type { GoogleBooksItem, GoogleBooksResponse } from '../types/googleBooks';
 
 const useMock = true;
 const cache = new Map<string, Book[]>();

@@ -1,5 +1,6 @@
 import './SidebarList.css';
 import { useBookContext } from '../../context/bookContext';
+import SidebarItem from '../SidebarItem/SidebarItem';
 
 export default function SidebarList() {
   const { readingList } = useBookContext();
@@ -11,13 +12,7 @@ export default function SidebarList() {
       ) : (
         <ul className="sidebar-list">
           {readingList.map((book) => (
-            <li key={book.id} className="sidebar-item">
-              <img src={book.thumbnail} alt={book.title} className="sidebar-cover" />
-              {/* <div className="sidebar-info">
-                <p className="sidebar-title">{book.title}</p>
-                <p className="sidebar-author">{book.author}</p>
-              </div> */}
-            </li>
+            <SidebarItem key={book.id} book={book} />
           ))}
         </ul>
       )

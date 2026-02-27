@@ -89,3 +89,8 @@
   font-size: 25px;
   font-weight: 700;
 }
+
+.book-genres {
+  display: flex;
+  gap: 0.5rem;
+}

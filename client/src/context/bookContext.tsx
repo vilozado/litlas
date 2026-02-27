@@ -1,24 +1,23 @@
 import React, { createContext, useContext, useState } from "react";
 
-import type { Book } from "../types/book";
+import type { Book, BookStatus, SavedBook } from "../types/book";
 import { fetchBooks } from "../utils/fetchBooks";
 
 interface BookContextType {
-  allBooks: Book[]
   selectedBooks: Book[]
   selectedCountry: string | null
-  readingList: Book[]
+  readingList: SavedBook[]
   setBookByCountry: (country: string, subject: string) => void
   addToReadingList: (book: Book) => void
+  updateBookStatus: (id: string, status: BookStatus) => void
 }
 
 const BookContext = createContext<BookContextType | null>(null);
 
 export function BookProvider({ children }: { children: React.ReactNode }) {
-  const [allBooks, setAllBooks] = useState<Book[]>([]);
   const [selectedBooks, setSelectedBooks] = useState<Book[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const [readingList, setReadingList] = useState<Book[]>([]);
+  const [readingList, setReadingList] = useState<SavedBook[]>([]);
 
   const setBookByCountry = async (country: string, subject: string) => {
     const books = await fetchBooks(subject);
@@ -29,18 +28,28 @@ export function BookProvider({ children }: { children: React.ReactNode }) {
   const addToReadingList = (book: Book) => {
     setReadingList(prev => {
       if (prev.some(b => b.id === book.id)) return prev;
-      return [...prev, book];
+      const newBook: SavedBook = {
+        ...book,
+        status: 'to be read'
+      }
+      return [...prev, newBook];
     })
+  }
+
+  const updateBookStatus = (id: string, status: BookStatus) => {
+    setReadingList(prev =>
+      prev.map(book => book.id === id ? { ...book, status } : book)
+    )
   }
 
   return (
     <BookContext.Provider value={{
-      allBooks,
       selectedBooks,
       selectedCountry,
       readingList,
       setBookByCountry,
-      addToReadingList
+      addToReadingList,
+      updateBookStatus
     }}>
       {children}
     </BookContext.Provider>
