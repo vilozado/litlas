@@ -21,6 +21,7 @@ export function BookProvider({ children }: { children: React.ReactNode }) {
 
   const setBookByCountry = async (country: string, subject: string) => {
     const books = await fetchBooks(subject);
+    console.log('books fetched:', books)
     setSelectedCountry(country);
     setSelectedBooks(books);
   }
