@@ -1,19 +1,38 @@
 .sidebar {
-  background-color: #fffbee;
-  width: 17rem;
+  background-color: #faf9f6;
+  width: 18rem;
   height: 100%;
   position: absolute;
   z-index: 2000;
   overflow-y: auto;
   top: 0;
   right: 0;
+  box-shadow: 1px 3px 6px 2px rgba(141, 141, 141, 0.6);
 }
 
 .sidebar-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   list-style: none;
   margin: 1rem;
-  padding: 0;
+  display: grid;
+  grid-template-rows: max-content;
+  gap: 0.5rem;
+}
+
+.sidebar-filter {
+  width: 80%;
+  font-size: 1.15rem;
+  padding: 0.2em;
+  background-color: #fff;
+  border: 1px solid #caced1;
+  border-radius: 0.25rem;
+  color: #000;
+  cursor: pointer;
+  margin: 1rem 1rem 0rem 1.8rem;
+}
+
+.sidebar-placeholder {
+  font-family: 'EB Garamond', sans-serif;
+  font-size: 20px;
+  padding: 1rem;
+
 }

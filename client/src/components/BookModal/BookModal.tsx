@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom"
 import './BookModal.css'
 import { useState, useEffect } from "react";
-import { useBookContext } from "../../context/bookContext";
+import { useBookContext } from "../../context/useBookContext";
 
 interface Modal {
   open: boolean,
@@ -14,12 +14,15 @@ export default function BookModal({ open, onClose }: Modal) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    setCurrentIndex(Math.floor(Math.random() * selectedBooks.length))
-  }, [selectedCountry]);
+    if (!open || !selectedBooks.length) return;
+    const randomIndex = Math.floor(Math.random() * selectedBooks.length);
+    setCurrentIndex(randomIndex);
+  }, [open, selectedBooks]);
 
   const currentBook = selectedBooks[currentIndex];
 
   const handleNext = () => {
+    if (!selectedBooks.length) return;
     setCurrentIndex(prev => (prev + 1) % selectedBooks.length)
   }
 
@@ -37,28 +40,28 @@ export default function BookModal({ open, onClose }: Modal) {
         <div className="modal-body">
           {
             currentBook && (
-              <>
+              <div key={currentBook.id} className='book-transition'>
                 <img src={currentBook.thumbnail} className="book-cover" />
                 <div className="book-content">
                   <p id="book-title">{currentBook.title}</p>
-                  <p>{currentBook.author}</p>
-                  <div className='book-genres'>
-                    {currentBook.categories.map(category => (
-                      <p key={category}>{category}</p>
-                    ))}
-                  </div>
-                  <p>{currentBook.publishedDate}</p>
-                  <p id="book-description">{currentBook.description}</p>
+                  <p className="author">{currentBook.author}</p>
+                  <p className="publish-date">{currentBook.publishedDate}</p>
+                  <p id="book-description">
+                    <span className='genre'>{currentBook.categories?.map(category => (
+                      <span key={category}>{category}</span>
+                    ))}</span>
+                    {currentBook.description}
+                  </p>
                 </div>
-              </>
+              </div>
             )
           }
         </div>
         <div className="btn-container">
-          <button type="button" className="modal-btn" onClick={() => addToReadingList(currentBook)}>
-            Add to My Reading List
+          <button className="add-btn" onClick={() => currentBook && addToReadingList(currentBook)}>
+            ★ Save
           </button>
-          <button type="button" className="modal-btn" onClick={handleNext}>
+          <button className="next-btn" onClick={handleNext}>
             Next
           </button>
         </div>

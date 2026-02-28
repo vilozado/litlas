@@ -1,5 +1,5 @@
 import './SidebarList.css';
-import { useBookContext } from '../../context/bookContext';
+import { useBookContext } from '../../context/useBookContext';
 import SidebarItem from '../SidebarItem/SidebarItem';
 
 export default function SidebarList() {
@@ -8,13 +8,21 @@ export default function SidebarList() {
   return (
     <div className='sidebar'>
       {readingList.length === 0 ? (
-        <p>Books you save will appear here.</p>
+        <div className='sidebar-placeholder'>
+          <p>Your reading list is empty.</p>
+          <p>Add a book to display it here.</p>
+        </div>
+
       ) : (
-        <ul className="sidebar-list">
-          {readingList.map((book) => (
-            <SidebarItem key={book.id} book={book} />
-          ))}
-        </ul>
+        <>
+          <select className='sidebar-filter'>
+          </select>
+          <ul className="sidebar-list">
+            {readingList.map((book) => (
+              <SidebarItem key={book.id} book={book} />
+            ))}
+          </ul>
+        </>
       )
       }
     </div>

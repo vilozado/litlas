@@ -1,13 +1,13 @@
 import './Map.css';
 import 'leaflet/dist/leaflet.css';
-import type { Feature } from 'geojson';
+import type { Feature, GeoJsonObject } from 'geojson';
 import { MapContainer, GeoJSON } from 'react-leaflet';
 import worldGeoJSON from '../../assets/worldGeoJSON.json';
 import countryLiteratureMap from '../../data/countryLiteratureMap';
 import type { Layer } from 'leaflet';
 import { useState } from 'react';
 import BookModal from '../BookModal/BookModal';
-import { useBookContext } from '../../context/bookContext';
+import { useBookContext } from '../../context/useBookContext';
 
 export default function Map() {
   const [showBookModal, setShowBookModal] = useState(false);
@@ -53,8 +53,8 @@ export default function Map() {
   return (
     <div>
       <BookModal open={showBookModal} onClose={() => setShowBookModal(false)} />
-      <MapContainer className='map-container' center={[25, 30]} zoom={3} scrollWheelZoom={false} zoomControl={true} keyboard={true} style={{ height: '652px', width: '100%', backgroundColor: '#F8F7F4' }}>
-        <GeoJSON data={worldGeoJSON as any} style={getCountryStyle} onEachFeature={onEachFeature} />
+      <MapContainer className='map-container' center={[25, 30]} zoom={3} scrollWheelZoom={false} zoomControl={true} keyboard={true} style={{ height: '700px', width: '100%', backgroundColor: '#f9f0d793' }}>
+        <GeoJSON data={worldGeoJSON as GeoJsonObject} style={getCountryStyle} onEachFeature={onEachFeature} />
       </MapContainer>
     </div>
   )

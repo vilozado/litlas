@@ -1,18 +1,21 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useState } from "react";
 
 import type { Book, BookStatus, SavedBook } from "../types/book";
-import { fetchBooks } from "../utils/fetchBooks";
+import { fetchBooks } from "../services/fetchBooks";
+
+// ? Question: should I split the context into MapContext and ListContext to avoid unnecessary rerenders?
 
 interface BookContextType {
   selectedBooks: Book[]
   selectedCountry: string | null
-  readingList: SavedBook[]
   setBookByCountry: (country: string, subject: string) => void
+  readingList: SavedBook[]
   addToReadingList: (book: Book) => void
   updateBookStatus: (id: string, status: BookStatus) => void
 }
 
-const BookContext = createContext<BookContextType | null>(null);
+// eslint-disable-next-line react-refresh/only-export-components
+export const BookContext = createContext<BookContextType | null>(null);
 
 export function BookProvider({ children }: { children: React.ReactNode }) {
   const [selectedBooks, setSelectedBooks] = useState<Book[]>([]);
@@ -21,7 +24,6 @@ export function BookProvider({ children }: { children: React.ReactNode }) {
 
   const setBookByCountry = async (country: string, subject: string) => {
     const books = await fetchBooks(subject);
-    console.log('books fetched:', books)
     setSelectedCountry(country);
     setSelectedBooks(books);
   }
@@ -57,8 +59,3 @@ export function BookProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
-export const useBookContext = () => {
-  const context = useContext(BookContext);
-  if (!context) throw new Error;
-  return context;
-}

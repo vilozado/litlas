@@ -2,7 +2,6 @@ type LiteratureTradition = {
   subject: string,
 }
 
-
 const countryLiteratureMap: Record<string, LiteratureTradition> = {
   "Russia": { subject: "russian literature" },
   "Japan": { subject: "japanese literature" },
