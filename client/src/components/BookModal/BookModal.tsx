@@ -42,7 +42,7 @@ export default function BookModal({ open, onClose }: BookModalProps) {
         <div className="modal-head">
           <h1>{selectedCountry}</h1>
           <button type="button" id="close-btn" onClick={onClose}>
-            X
+            x
           </button>
         </div>
         <div className="modal-body">
@@ -74,7 +74,7 @@ export default function BookModal({ open, onClose }: BookModalProps) {
             ★ Save
           </button>
           <button className="next-btn" onClick={handleNext}>
-            Next
+            NEXT
           </button>
         </div>
       </div>

@@ -6,6 +6,17 @@
   display: flex;
   padding-top: 3rem;
   justify-content: center;
+  animation: sidebarFade 150ms ease;
+}
+
+@keyframes sidebarFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .modal-content {
@@ -37,6 +48,7 @@
 .modal-body {
   height: 70%;
   font-family: "EB Garamond", sans-serif;
+  padding: 1rem;
 }
 
 .btn-container {
@@ -52,8 +64,8 @@
   right: 1rem;
   background-color: transparent;
   border: none;
-  font-size: 1.2rem;
-  color: #777;
+  font-size: 1.5rem;
+  color: #343333;
   transition: opacity 150ms ease;
 }
 
@@ -68,7 +80,7 @@
 }
 
 .book-cover {
-  height: 22rem;
+  height: 21rem;
   width: 15rem;
   border-radius: 5px;
   box-shadow: 1px 3px 6px 2px rgb(88, 88, 88);
@@ -147,13 +159,13 @@
   display: flex;
   gap: 2rem;
   width: 100%;
-  animation: slideFadeIn 220ms ease;
+  animation: slideFadeIn 300ms ease;
 }
 
 @keyframes slideFadeIn {
   from {
     opacity: 0;
-    transform: translateX(12px);
+    transform: translateX(5px);
   }
 
   to {
