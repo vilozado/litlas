@@ -1,7 +1,8 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 import type { Book, BookStatus, SavedBook } from "../types/book";
 import { fetchBooks } from "../services/fetchBooks";
+import { fetchSavedBooks } from "../services/SavedBooksService";
 
 // ? Question: should I split the context into MapContext and ListContext to avoid unnecessary rerenders?
 
@@ -10,7 +11,8 @@ interface BookContextType {
   selectedCountry: string | null
   setBookByCountry: (country: string, subject: string) => void
   readingList: SavedBook[]
-  addToReadingList: (book: Book) => void
+  loadingApp: boolean
+  addToReadingList: (book: SavedBook) => void
   updateBookStatus: (id: string, status: BookStatus) => void
 }
 
@@ -21,6 +23,14 @@ export function BookProvider({ children }: { children: React.ReactNode }) {
   const [selectedBooks, setSelectedBooks] = useState<Book[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [readingList, setReadingList] = useState<SavedBook[]>([]);
+  const [loadingApp, setLoadingApp] = useState<boolean>(true);
+
+  useEffect(() => {
+    fetchSavedBooks()
+      .then(setReadingList)
+      .catch(console.error)
+      .finally(() => setLoadingApp(false))
+  }, [])
 
   const setBookByCountry = async (country: string, subject: string) => {
     const books = await fetchBooks(subject);
@@ -28,14 +38,10 @@ export function BookProvider({ children }: { children: React.ReactNode }) {
     setSelectedBooks(books);
   }
 
-  const addToReadingList = (book: Book) => {
+  const addToReadingList = (book: SavedBook) => {
     setReadingList(prev => {
-      if (prev.some(b => b.id === book.id)) return prev;
-      const newBook: SavedBook = {
-        ...book,
-        status: 'to be read'
-      }
-      return [...prev, newBook];
+      if (prev.some(b => b.id === book.id)) return prev
+      return [...prev, book]
     })
   }
 
@@ -50,6 +56,7 @@ export function BookProvider({ children }: { children: React.ReactNode }) {
       selectedBooks,
       selectedCountry,
       readingList,
+      loadingApp,
       setBookByCountry,
       addToReadingList,
       updateBookStatus

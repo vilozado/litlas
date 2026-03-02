@@ -36,9 +36,9 @@ export default function Map() {
     const isRead = readingList.some(book => book.status === 'read' && book.subject === subject);
 
     return {
-      fillColor: isSaved ? '#ffe46b' : isRead ? '#1E2A38' : isMapped ? '#fff5cf' : '#fbf9f6',
-      fillOpacity: 1,
-      color: '#75797ff8',
+      fillColor: isSaved ? '#e7c25a' : isRead ? '#243447' : isMapped ? '#E3E6EA' : '#fbf9f6',
+      fillOpacity: 0.95,
+      color: '#696d74f8',
       weight: 1
     }
   }

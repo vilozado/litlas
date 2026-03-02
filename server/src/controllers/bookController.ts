@@ -46,4 +46,34 @@ const addBookToList = async (req: Request, res: Response) => {
   }
 }
 
-export { getBooksByCountry, getBookList, addBookToList };
+const updateBook = async (req: Request, res: Response) => {
+  const id = req.params.id as string;
+  console.log('params id:', id)
+  console.log('type:', typeof id)
+
+  try {
+    const updatedBook = await Book.findOneAndUpdate(
+      { id: id },
+      { $set: { status: req.body.status } },
+      { returnDocument: 'after' }
+    );
+
+    if (!updatedBook) return res.status(404).json({ error: { msg: 'Book not found' } })
+    res.status(200).json(updatedBook);
+
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+const removeBook = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id as string;
+    await Book.findOneAndDelete({ id: id });
+    res.status(200).json();
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+export { getBooksByCountry, getBookList, addBookToList, updateBook, removeBook };

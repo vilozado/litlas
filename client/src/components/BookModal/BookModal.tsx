@@ -2,6 +2,8 @@ import './BookModal.css'
 import { createPortal } from "react-dom"
 import { useState, useEffect } from "react";
 import { useBookContext } from "../../context/useBookContext";
+import { postBook } from '../../services/SavedBooksService';
+import type { SavedBook } from '../../types/book';
 
 interface Modal {
   open: boolean,
@@ -24,6 +26,13 @@ export default function BookModal({ open, onClose }: Modal) {
   const handleNext = () => {
     if (!selectedBooks.length) return;
     setCurrentIndex(prev => (prev + 1) % selectedBooks.length)
+  }
+
+  const handleAdd = () => {
+    if (!currentBook) return;
+    const savedBook: SavedBook = { ...currentBook, status: 'to be read' }
+    addToReadingList(savedBook)
+    postBook(savedBook);
   }
 
   if (!open) return null;
@@ -58,7 +67,7 @@ export default function BookModal({ open, onClose }: Modal) {
           }
         </div>
         <div className="btn-container">
-          <button className="add-btn" onClick={() => currentBook && addToReadingList(currentBook)}>
+          <button className="add-btn" onClick={handleAdd}>
             ★ Save
           </button>
           <button className="next-btn" onClick={handleNext}>

@@ -18,10 +18,11 @@ const countryLiteratureMap: Record<string, { subject: string }> = {
   "Australia": { subject: "australian literature" },
   "Ukraine": { subject: "ukrainian literature" },
   "Iceland": { subject: "icelandic literature" },
-  // "USA": { subject: "american literature"},
-  // "South Africa": { subject: "south african literature"},
-  // "Canada": { subject: "canadian literature"},
-  // "Algeria": { subject: "algerian literature"},
+  //The next four countries don't have mock data in mockBooks.json, only uncommented for demo
+  "USA": { subject: "american literature" },
+  "South Africa": { subject: "south african literature" },
+  "Canada": { subject: "canadian literature" },
+  "Algeria": { subject: "algerian literature" },
 
 }
 
