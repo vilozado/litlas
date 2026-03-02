@@ -1,11 +1,11 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
 const bookSchema = new Schema({
   id: {
     type: String,
-    required: true
+    required: true,
   },
   subject: {
     type: String,
@@ -17,22 +17,22 @@ const bookSchema = new Schema({
   },
   author: {
     type: String,
-    required: true
+    required: true,
   },
   publishedDate: {
-    type: String || Number
+    type: String || Number,
   },
   description: {
-    type: String
+    type: String,
   },
   categories: [String],
   thumbnail: {
-    type: String
+    type: String,
   },
   status: {
-    type: String
-  }
+    type: String,
+  },
 });
 
-const Book = mongoose.model('book', bookSchema);
+const Book = mongoose.model("book", bookSchema);
 export default Book;

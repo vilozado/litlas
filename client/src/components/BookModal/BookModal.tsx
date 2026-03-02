@@ -1,17 +1,16 @@
-import './BookModal.css'
-import { createPortal } from "react-dom"
+import "./BookModal.css";
+import { createPortal } from "react-dom";
 import { useState, useEffect } from "react";
 import { useBookContext } from "../../context/useBookContext";
-import { postBook } from '../../services/SavedBooksService';
-import type { SavedBook } from '../../types/book';
+import { postBook } from "../../services/SavedBooksService";
+import type { SavedBook } from "../../types/book";
 
-interface Modal {
-  open: boolean,
-  onClose: () => void,
+interface BookModalProps {
+  open: boolean;
+  onClose: () => void;
 }
 
-export default function BookModal({ open, onClose }: Modal) {
-
+export default function BookModal({ open, onClose }: BookModalProps) {
   const { selectedBooks, selectedCountry, addToReadingList } = useBookContext();
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -25,21 +24,21 @@ export default function BookModal({ open, onClose }: Modal) {
 
   const handleNext = () => {
     if (!selectedBooks.length) return;
-    setCurrentIndex(prev => (prev + 1) % selectedBooks.length)
-  }
+    setCurrentIndex((prev) => (prev + 1) % selectedBooks.length);
+  };
 
   const handleAdd = () => {
     if (!currentBook) return;
-    const savedBook: SavedBook = { ...currentBook, status: 'to be read' }
-    addToReadingList(savedBook)
+    const savedBook: SavedBook = { ...currentBook, status: "to be read" };
+    addToReadingList(savedBook);
     postBook(savedBook);
-  }
+  };
 
   if (!open) return null;
 
   return createPortal(
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e => e.stopPropagation())}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-head">
           <h1>{selectedCountry}</h1>
           <button type="button" id="close-btn" onClick={onClose}>
@@ -47,24 +46,28 @@ export default function BookModal({ open, onClose }: Modal) {
           </button>
         </div>
         <div className="modal-body">
-          {
-            currentBook && (
-              <div key={currentBook.id} className='book-transition'>
-                <img src={currentBook.thumbnail} className="book-cover" />
-                <div className="book-content">
-                  <p id="book-title">{currentBook.title}</p>
-                  <p className="author">{currentBook.author}</p>
-                  <p className="publish-date">{currentBook.publishedDate}</p>
-                  <p id="book-description">
-                    <span className='genre'>{currentBook.categories?.map(category => (
+          {currentBook && (
+            <div className="book-transition" key={currentBook.id}>
+              <img
+                src={currentBook.thumbnail}
+                alt={currentBook.title}
+                className="book-cover"
+              />
+              <div className="book-content">
+                <p className="book-title">{currentBook.title}</p>
+                <p className="author">{currentBook.author}</p>
+                <p className="publish-date">{currentBook.publishedDate}</p>
+                <p className="book-description">
+                  <span className="genre">
+                    {currentBook.categories?.map((category) => (
                       <span key={category}>{category}</span>
-                    ))}</span>
-                    {currentBook.description}
-                  </p>
-                </div>
+                    ))}
+                  </span>
+                  {currentBook.description}
+                </p>
               </div>
-            )
-          }
+            </div>
+          )}
         </div>
         <div className="btn-container">
           <button className="add-btn" onClick={handleAdd}>
@@ -76,6 +79,6 @@ export default function BookModal({ open, onClose }: Modal) {
         </div>
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }

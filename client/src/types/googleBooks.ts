@@ -1,21 +1,21 @@
 export interface GoogleBooksItem {
-  id: string,
-  subject: string,
+  id: string;
+  subject: string;
   volumeInfo: {
-    title: string,
-    authors?: string[],
-    publishedDate?: string,
-    description?: string,
-    categories?: string[],
+    title: string;
+    authors?: string[];
+    publishedDate?: string;
+    description?: string;
+    categories?: string[];
     imageLinks?: {
-      thumbnail?: string
-    },
-    language?: string
-  }
+      thumbnail?: string;
+    };
+    language?: string;
+  };
 }
 
 export interface GoogleBooksResponse {
-  kind: string,
-  totalItem: number,
-  items?: GoogleBooksItem[]
+  kind: string;
+  totalItem: number;
+  items?: GoogleBooksItem[];
 }

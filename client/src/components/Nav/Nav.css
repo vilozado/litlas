@@ -3,14 +3,13 @@
   padding: 0.5rem;
   display: flex;
   justify-content: space-between;
-  background-color: #1E2A38;
+  background-color: #1e2a38;
   align-items: center;
 }
 
 .title {
   font-size: 1.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0 1rem;
   letter-spacing: 0.35em;
 }
 

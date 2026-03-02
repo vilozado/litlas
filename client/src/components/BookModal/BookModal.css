@@ -3,6 +3,9 @@
   inset: 0;
   z-index: 2000;
   background: rgba(141, 141, 141, 0.6);
+  display: flex;
+  padding-top: 3rem;
+  justify-content: center;
 }
 
 .modal-content {
@@ -11,12 +14,6 @@
   background: #fbf9f6;
   width: 40rem;
   height: 35rem;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   border-radius: 5px;
   z-index: 2001;
   box-shadow: 1px 3px 6px 2px rgba(141, 141, 141, 0.6);
@@ -27,21 +24,19 @@
   width: 100%;
   display: flex;
   margin-bottom: 1rem;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .modal-head {
   justify-content: center;
   align-items: flex-start;
-  padding: 0.5rem;
   font-size: 14px;
   text-transform: uppercase;
-  /* letter-spacing: 0.1em; */
 }
 
 .modal-body {
   height: 70%;
-  font-family: 'EB Garamond', sans-serif;
+  font-family: "EB Garamond", sans-serif;
 }
 
 .btn-container {
@@ -69,16 +64,17 @@
 .book-content {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .book-cover {
-  height: 21rem;
+  height: 22rem;
   width: 15rem;
   border-radius: 5px;
   box-shadow: 1px 3px 6px 2px rgb(88, 88, 88);
 }
 
-#book-description {
+.book-description {
   font-size: 20px;
   margin-top: 1rem;
   overflow-y: auto;
@@ -87,16 +83,16 @@
   margin-bottom: 1rem;
 }
 
-#book-description::-webkit-scrollbar {
+.book-description::-webkit-scrollbar {
   width: 6px;
 }
 
-#book-description::-webkit-scrollbar-thumb {
+.book-description::-webkit-scrollbar-thumb {
   background: #dddddd;
   border-radius: 4px;
 }
 
-#book-title {
+.book-title {
   font-size: 28px;
   font-weight: 700;
 }
@@ -127,10 +123,12 @@
   background-color: transparent;
   font-size: 18px;
   text-transform: uppercase;
-  font-family: 'EB Garamond', sans-serif;
+  font-family: "EB Garamond", sans-serif;
   cursor: pointer;
   color: #2f2f2f;
-  transition: opacity 150ms ease, transform 150ms ease;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
   padding: 0.3rem;
 }
 
@@ -149,13 +147,13 @@
   display: flex;
   gap: 2rem;
   width: 100%;
-  animation: slideFadeIn 300ms ease;
+  animation: slideFadeIn 220ms ease;
 }
 
 @keyframes slideFadeIn {
   from {
     opacity: 0;
-    transform: translateX(20px);
+    transform: translateX(12px);
   }
 
   to {
