@@ -10,17 +10,17 @@
 }
 
 .sidebar-info {
-  width: 38%;
+  width: 40%;
 }
 
 .sidebar-author {
   font-style: italic;
-  font-size: 18px;
+  font-size: 1rem;
 }
 
 .sidebar-title {
   font-weight: 700;
-  font-size: 20px;
+  font-size: 1.2rem;
 }
 
 .sidebar-img,
@@ -75,10 +75,9 @@
 .close-btn {
   position: absolute;
   top: 0.5rem;
-  right: 0;
+  right: -0.3rem;
   background: transparent;
   border: none;
-  font-size: 0.8rem;
   cursor: pointer;
   opacity: 0;
   transition: opacity 0.2s ease;

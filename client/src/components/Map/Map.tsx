@@ -8,6 +8,7 @@ import type { Layer, StyleFunction } from "leaflet";
 import { useState, useMemo } from "react";
 import BookModal from "../BookModal/BookModal";
 import { useBookContext } from "../../context/useBookContext";
+import Legend from "../Legend/Legend";
 
 type CountryProps = { name: string };
 type CountryFeature = Feature<Geometry, CountryProps>;
@@ -95,8 +96,9 @@ export default function Map() {
         scrollWheelZoom={false}
         zoomControl={true}
         keyboard={true}
-        style={{ height: "700px", width: "100%", backgroundColor: "#a7cdf2" }}
+        style={{ height: "732px", width: "100%", backgroundColor: "#a7cdf2" }}
       >
+        <Legend />
         <GeoJSON
           data={worldGeoJSON as GeoJsonObject}
           style={getCountryStyle}

@@ -5,10 +5,11 @@ import "./SidebarItem.css";
 
 interface sidebarProps {
   book: SavedBook;
+  isRead?: boolean;
 }
 
 // ! TODO: create type for tracking status (read, to be read)
-export default function SidebarItem({ book }: sidebarProps) {
+export default function SidebarItem({ book, isRead = false }: sidebarProps) {
   const { updateBookStatus, deleteSavedBook } = useBookContext();
 
   const handleStatusChange = (status: BookStatus) => {
@@ -26,9 +27,11 @@ export default function SidebarItem({ book }: sidebarProps) {
     <li className="sidebar-item">
       <div className="sidebar-cover">
         <img src={book.thumbnail} alt={book.title} className="sidebar-img" />
-        <div className="btns-overlay">
-          <button onClick={() => handleStatusChange("read")}>Read</button>
-        </div>
+        {!isRead && (
+          <div className="btns-overlay">
+            <button onClick={() => handleStatusChange("read")}>Read</button>
+          </div>
+        )}
       </div>
       <button type="button" className="close-btn" onClick={handleDelete}>
         <span className="material-symbols-outlined">delete</span>

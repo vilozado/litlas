@@ -1,7 +1,7 @@
 .sidebar {
   background-color: #fbf9f6;
   width: 18rem;
-  height: 700px;
+  height: 732px;
   position: absolute;
   z-index: 2000;
   overflow-y: auto;
@@ -65,5 +65,57 @@
   font-size: 0.8rem;
   letter-spacing: 1px;
   text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.sidebar-section {
+  margin-top: 8px;
+}
+
+.sidebar-collapse-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "EB Garamond", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #7a7060;
+  transition: color 0.15s ease;
+}
+
+.sidebar-collapse-btn:hover {
+  color: #1e2a38;
+}
+
+.sidebar-count,
+.sidebar-count-read {
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+
+.sidebar-count {
+  background: #e7c25a;
+}
+
+.sidebar-count-read {
+  background: #1e2a38;
+}
+
+.sidebar-chevron {
+  margin-left: auto;
+  font-size: 0.6rem;
+}
+
+.sidebar-list--finished {
   opacity: 0.9;
 }
