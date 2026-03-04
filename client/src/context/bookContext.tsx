@@ -2,31 +2,31 @@ import React, { createContext, useState, useEffect } from "react";
 
 import type { Book, BookStatus, SavedBook } from "../types/book";
 import { fetchBooks } from "../services/fetchBooks";
-import { fetchSavedBooks } from "../services/SavedBooksService";
-
-// ? Question: should I split the context into MapContext and ListContext to avoid unnecessary rerenders?
+import { fetchSavedBooks } from "../services/savedBooksService";
 
 interface BookContextType {
-  selectedBooks: Book[];
+  selectedBooks: Book[]; //array of books on country click
   selectedCountry: string | null;
-  setBookByCountry: (country: string, subject: string) => Promise<void>;
-  readingList: SavedBook[];
-  loadingApp: boolean;
-  addToReadingList: (book: SavedBook) => void;
-  updateBookStatus: (id: string, status: BookStatus) => void;
-  deleteSavedBook: (id: string) => void;
+  setBookByCountry: (country: string, subject: string) => Promise<void>; //fetch books by country and subject
+  loadingApp: boolean; //indicates if the app is still loading data from the backend
+  readingList: SavedBook[]; //array of books in reading list
+  addToReadingList: (book: SavedBook) => void; //adds a book to the reading list
+  updateBookStatus: (id: string, status: BookStatus) => void; //function to update the status of a book in the reading list
+  deleteSavedBook: (id: string) => void; //function to delete a book from the reading list
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const BookContext = createContext<BookContextType | null>(null);
 
 export function BookProvider({ children }: { children: React.ReactNode }) {
+  //wraps the app and provides the book context to all components
   const [selectedBooks, setSelectedBooks] = useState<Book[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [readingList, setReadingList] = useState<SavedBook[]>([]);
   const [loadingApp, setLoadingApp] = useState<boolean>(true);
 
   useEffect(() => {
+    //on app load, fetch the reading list from the backend and set it in state
     fetchSavedBooks()
       .then(setReadingList)
       .catch(console.error)
@@ -34,6 +34,7 @@ export function BookProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const setBookByCountry = async (country: string, subject: string) => {
+    //fetch books by country and subject, set selected country and books in state
     const books = await fetchBooks(subject);
     setSelectedCountry(country);
     setSelectedBooks(books);

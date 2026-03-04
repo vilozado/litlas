@@ -5,17 +5,13 @@ import { useState } from "react";
 
 export default function SidebarList() {
   const { readingList } = useBookContext();
-  const [showRead, setShowRead] = useState(false);
-  const [showToBeRead, setShowToBeRead] = useState(true);
+  const [showRead, setShowRead] = useState(false); // State to control toggle arrow of "Read" section
+  const [showToBeRead, setShowToBeRead] = useState(true); // State to control toggle arrow of "To Be Read" section
 
   const toBeRead = readingList.filter((book) => book.status === "to be read");
   const finished = readingList.filter((book) => book.status === "read");
 
-  const readCountries = new Set(
-    readingList
-      .filter((book) => book.status === "read")
-      .map((book) => book.subject),
-  );
+  const readCountries = new Set(finished.map((book) => book.subject)); // Get unique countries from finished books
 
   const countriesCounter = readCountries.size;
 

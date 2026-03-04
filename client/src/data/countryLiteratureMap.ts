@@ -1,4 +1,5 @@
 const countryLiteratureMap: Record<string, { subject: string }> = {
+  // The keys are country names and the values are objects with a "subject" property that corresponds to the subject in mockBooks.json
   Russia: { subject: "russian literature" },
   Japan: { subject: "japanese literature" },
   Argentina: { subject: "argentine literature" },
@@ -17,11 +18,10 @@ const countryLiteratureMap: Record<string, { subject: string }> = {
   Australia: { subject: "australian literature" },
   Ukraine: { subject: "ukrainian literature" },
   Iceland: { subject: "icelandic literature" },
-  //The next four countries don't have mock data in mockBooks.json, only uncommented for demo
-  USA: { subject: "american literature" },
-  "South Africa": { subject: "south african literature" },
-  Canada: { subject: "canadian literature" },
-  Algeria: { subject: "algerian literature" },
+  // USA: { subject: "american literature" },
+  // "South Africa": { subject: "south african literature" },
+  // Canada: { subject: "canadian literature" },
+  // Algeria: { subject: "algerian literature" },
 };
 
 export default countryLiteratureMap;

@@ -1,5 +1,5 @@
 import { useBookContext } from "../../context/useBookContext";
-import { changeStatus, deleteBook } from "../../services/SavedBooksService";
+import { changeStatus, deleteBook } from "../../services/savedBooksService";
 import type { BookStatus, SavedBook } from "../../types/book";
 import "./SidebarItem.css";
 
@@ -14,13 +14,13 @@ export default function SidebarItem({ book, isRead = false }: sidebarProps) {
 
   const handleStatusChange = (status: BookStatus) => {
     if (!book) return;
-    updateBookStatus(book.id, status);
-    changeStatus(book.id, status);
+    updateBookStatus(book.id, status); // Context update
+    changeStatus(book.id, status); // Backend update
   };
 
   const handleDelete = () => {
-    deleteSavedBook(book.id);
-    deleteBook(book.id);
+    deleteSavedBook(book.id); // Context remove
+    deleteBook(book.id); // Backend remove
   };
 
   return (

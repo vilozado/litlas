@@ -19,9 +19,9 @@ export default function Map() {
 
   const handleCountryClick = async (feature: CountryFeature) => {
     const countryName = feature.properties.name;
-    const entry = countryLiteratureMap[countryName];
+    const entry = countryLiteratureMap[countryName]; // Check if the country is in countryLiteratureMap
 
-    if (!entry) return;
+    if (!entry) return; // won't open the modal if the country is not mapped in countryLiteratureMap
 
     try {
       await setBookByCountry(countryName, entry.subject);
@@ -32,6 +32,7 @@ export default function Map() {
   };
 
   const { savedSubjects, readSubjects } = useMemo(() => {
+    // Compute sets of subjects for saved and read books to determine country colors on the map
     const saved = new Set();
     const read = new Set();
 
@@ -53,9 +54,9 @@ export default function Map() {
       };
     }
 
-    const countryName = feature.properties.name;
-    const subject = countryLiteratureMap[countryName]?.subject;
-    const isMapped = Boolean(countryName && subject);
+    const countryName = feature.properties.name; //ex: "France"
+    const subject = countryLiteratureMap[countryName]?.subject; //ex: "French Literature"
+    const isMapped = Boolean(countryName && subject); // Check if the country is mapped in countryLiteratureMap
     const isSaved = subject ? savedSubjects.has(subject) : false;
     const isRead = subject ? readSubjects.has(subject) : false;
 
