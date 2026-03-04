@@ -1,6 +1,8 @@
 <div align="center"> 
+  
 # Litlas
 Welcome to **Litlas**, a full-stack web application that encourages readers to explore world literature through an interactive map-based experience. Users can discover books from different countries, build a personalized reading list, and visually track their progress across the globe.
+
 
 [Features](#features) · [Tech Stack](#tech-stack) · [Getting Started](#getting-started)
 
