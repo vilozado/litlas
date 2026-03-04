@@ -96,7 +96,7 @@ export default function Map() {
         scrollWheelZoom={false}
         zoomControl={true}
         keyboard={true}
-        style={{ height: "732px", width: "100%", backgroundColor: "#a7cdf2" }}
+        style={{ height: "766px", width: "100%", backgroundColor: "#a7cdf2" }}
       >
         <Legend />
         <GeoJSON
