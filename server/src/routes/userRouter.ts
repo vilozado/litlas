@@ -5,7 +5,7 @@ import {
   getBookList,
   updateBook,
   removeBook,
-} from "./controllers/bookController";
+} from "../controllers/bookController";
 const router = express.Router();
 
 router.get("/api/books", getBooksBySubject); //Google Books API

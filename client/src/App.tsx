@@ -1,26 +1,14 @@
 import "./App.css";
-import Nav from "./components/Nav/Nav";
-import Map from "./components/Map/Map";
-import SidebarList from "./components/SidebarList/SidebarList";
-import { useState } from "react";
-import { useBookContext } from "./context/useBookContext";
+import { Routes, Route } from "react-router";
+import Dashboard from "./components/Dashboard/Dashboard";
+import LandingPage from "./components/LandingPage/LandingPage";
 
 function App() {
-  const [showSidebar, setShowsideBar] = useState(false);
-  const { loadingApp } = useBookContext();
-
   return (
-    <>
-      <Nav onMyListClick={() => setShowsideBar((toggle) => !toggle)} />
-      {loadingApp ? (
-        <h1>Loading...</h1>
-      ) : (
-        <div className="app-content">
-          <Map />
-          {showSidebar && <SidebarList />}
-        </div>
-      )}
-    </>
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Routes>
   );
 }
 

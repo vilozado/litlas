@@ -1,8 +1,10 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-import router from "./router";
+import userRouter from "./routes/userRouter";
+import authRouter from "./routes/authRouter";
 import connectDb from "./models";
+import { authMiddleware } from "./middleware/authMiddleware";
 
 dotenv.config();
 const app = express();
@@ -15,7 +17,8 @@ app.use(
   }),
 );
 app.use(express.json());
-app.use(router);
+app.use("/auth", authRouter);
+app.use("/dashboard", authMiddleware, userRouter);
 
 (async function bootstrap() {
   await connectDb();
