@@ -3,6 +3,7 @@ import type { SavedBook } from "../types/book";
 import { getCSRFToken } from "../utils/fetchUtils";
 
 const baseUrl = "http://localhost:3000/dashboard";
+const token = await getCSRFToken();
 
 export async function fetchSavedBooks(): Promise<SavedBook[]> {
   const res = await fetch(`${baseUrl}/reading-list`, {
@@ -18,7 +19,7 @@ export async function postBook(book: SavedBook): Promise<SavedBook> {
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
-      "x-csrf-token": await getCSRFToken(),
+      "x-csrf-token": token,
     },
     body: JSON.stringify(book),
   });
@@ -35,7 +36,7 @@ export async function changeStatus(
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
-      "x-csrf-token": await getCSRFToken(),
+      "x-csrf-token": token,
     },
     body: JSON.stringify({ status }),
   });
@@ -48,7 +49,7 @@ export async function deleteBook(id: string): Promise<void> {
     method: "DELETE",
     credentials: "include",
     headers: {
-      "x-csrf-token": await getCSRFToken(),
+      "x-csrf-token": token,
     },
   });
   if (!res.ok) throw new Error("Could not delete book.");

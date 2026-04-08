@@ -3,6 +3,7 @@ import React, { createContext, useState, useEffect } from "react";
 import type { Book, BookStatus, SavedBook } from "../types/book";
 import { fetchBooks } from "../services/fetchBooks";
 import { fetchSavedBooks } from "../services/savedBooksService";
+import { useAuth } from "./authContext";
 
 interface BookContextType {
   selectedBooks: Book[]; //array of books on country click
@@ -24,14 +25,28 @@ export function BookProvider({ children }: { children: React.ReactNode }) {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [readingList, setReadingList] = useState<SavedBook[]>([]);
   const [loadingApp, setLoadingApp] = useState<boolean>(true);
+  const { isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
-    //on app load, fetch the reading list from the backend and set it in state
+    if (isLoading) return;
+
+    if (!isAuthenticated) {
+      setReadingList([]);
+      setSelectedBooks([]);
+      setSelectedCountry(null);
+      setLoadingApp(false);
+      return;
+    }
+    setLoadingApp(true);
+
     fetchSavedBooks()
       .then(setReadingList)
-      .catch(console.error)
+      .catch((err) => {
+        console.error(err);
+        setReadingList([]);
+      })
       .finally(() => setLoadingApp(false));
-  }, []);
+  }, [isAuthenticated, isLoading]);
 
   const setBookByCountry = async (country: string, subject: string) => {
     //fetch books by country and subject, set selected country and books in state

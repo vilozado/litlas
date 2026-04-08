@@ -6,6 +6,8 @@ import { Types } from "mongoose";
 declare module "express-session" {
   export interface SessionData {
     uid: Types.ObjectId;
+    isNew?: boolean;
+    csrfInit?: boolean;
   }
 }
 
@@ -75,4 +77,12 @@ export const logout = async (req: Request, res: Response) => {
     res.clearCookie("sid"); //session cookie, set by express-session, identifies user session in Redis
     return res.status(200).json({ data: "Logout successful!", error: null });
   });
+};
+
+export const me = async (req: Request, res: Response) => {
+  if (!req.session.uid) {
+    return res.status(401).json({ msg: "Not authenticated" });
+  }
+
+  res.json({ user: req.session.uid });
 };

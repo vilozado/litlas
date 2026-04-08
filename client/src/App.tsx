@@ -1,13 +1,28 @@
 import "./App.css";
-import { Routes, Route } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import Dashboard from "./components/Dashboard/Dashboard";
 import LandingPage from "./components/LandingPage/LandingPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { useAuth } from "./context/authContext";
 
 function App() {
+  const { isAuthenticated } = useAuth();
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route
+        path="/"
+        element={
+          isAuthenticated ? <Navigate to="/dashboard" /> : <LandingPage />
+        }
+      />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }

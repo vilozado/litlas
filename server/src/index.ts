@@ -7,11 +7,11 @@ import cookieParser from "cookie-parser";
 import { RedisStore } from "connect-redis";
 import { doubleCsrf } from "csrf-csrf";
 import { createClient } from "redis";
-
 import userRouter from "./routes/userRouter";
 import authRouter from "./routes/authRouter";
 import connectDb from "./models";
 import { authMiddleware } from "./middleware/authMiddleware";
+import { me } from "./controllers/authController";
 
 dotenv.config();
 
@@ -40,7 +40,7 @@ redisClient.on("error", (err) => console.error("Redis error:", err));
       cookieName: "x-csrf-token",
       cookieOptions: {
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "lax",
         httpOnly: true,
       },
     });
@@ -56,7 +56,7 @@ redisClient.on("error", (err) => console.error("Redis error:", err));
       }),
     );
     app.use(express.json()); //bodyparser
-    app.use(cookieParser()); //cookie parser
+    app.use(cookieParser(process.env.SESSION_SECRET!)); //cookie parser
     app.use(
       session({
         //store session cookies for auth
@@ -66,20 +66,34 @@ redisClient.on("error", (err) => console.error("Redis error:", err));
         saveUninitialized: false,
         store: redisStore,
         cookie: {
-          secure: process.env.NODE_ENV === "production",
+          secure: false,
           maxAge: 1000 * 60 * 60,
-          sameSite: true,
+          sameSite: "lax",
           httpOnly: true,
+          path: "/",
         },
       }),
     );
 
     //routes
     app.get("/get-csrf-token", (req, res) => {
-      res.json({ csrfToken: generateCsrfToken(req, res) });
+      if (!req.session.id || req.session.isNew) {
+        req.session.csrfInit = true;
+        req.session.save((err) => {
+          if (err) return res.status(500).json({ msg: "Session error" });
+          const token = generateCsrfToken(req, res);
+          res.json({ csrfToken: token });
+        });
+      } else {
+        req.session.touch();
+        const token = generateCsrfToken(req, res);
+        res.json({ csrfToken: token });
+      }
     });
+
+    app.get("/auth/me", authMiddleware, me);
     app.use("/auth", doubleCsrfProtection, authRouter);
-    app.use("/dashboard", authMiddleware, doubleCsrfProtection, userRouter);
+    app.use("/dashboard", authMiddleware, userRouter);
 
     //initialization
     app.listen(PORT, () =>

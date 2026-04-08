@@ -1,23 +1,45 @@
-import { getCSRFToken } from "../utils/fetchUtils";
+import { getCSRFToken as fetchCSRFToken } from "../utils/fetchUtils";
 
 const base_url = "http://localhost:3000";
 const auth_url = `${base_url}/auth`;
 
-const authFetch = async (url: string, user: object) => {
-  const csrfToken = await getCSRFToken();
+let csrfToken: string | null = null;
+
+const getCSRFToken = async () => {
+  if (csrfToken) return csrfToken;
+
+  csrfToken = await fetchCSRFToken();
+  return csrfToken;
+};
+
+const authFetch = async (url: string, user: object, retry = true) => {
+  const token = await getCSRFToken();
+
   const res = await fetch(url, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
-      "x-csrf-token": csrfToken,
+      "x-csrf-token": token,
     },
     body: JSON.stringify(user),
   });
-  if (!res.ok) throw new Error(`Request failed ${res.status}`);
+
+  // If 403, token might be stale — reset and retry once
+  if (res.status === 403 && retry) {
+    csrfToken = null;
+    return authFetch(url, user, false);
+  }
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => null);
+    throw new Error(err?.msg || `Request failed ${res.status}`);
+  }
+
   return res.json();
 };
 
+// ✅ SIGNUP
 export const signup = async (user: {
   name: string;
   email: string;
@@ -26,17 +48,35 @@ export const signup = async (user: {
   return authFetch(`${auth_url}/signup`, user);
 };
 
+// ✅ LOGIN (🔥 refresh token AFTER login)
 export const login = async (user: { email: string; password: string }) => {
-  return authFetch(`${auth_url}/login`, user);
+  const res = await authFetch(`${auth_url}/login`, user);
+
+  // 🔥 IMPORTANT: session changed → reset token
+  csrfToken = null;
+  await getCSRFToken(); // fetch new token tied to new session
+
+  return res;
 };
 
+// ✅ LOGOUT
 export const logout = async () => {
-  const csrfToken = await getCSRFToken();
+  const token = await getCSRFToken();
+
   const res = await fetch(`${auth_url}/logout`, {
     method: "POST",
     credentials: "include",
-    headers: { "x-csrf-token": csrfToken },
+    headers: {
+      "x-csrf-token": token,
+    },
   });
-  if (!res.ok) throw new Error(`Logout failed: ${res.status}`);
+
+  if (!res.ok) {
+    throw new Error(`Logout failed: ${res.status}`);
+  }
+
+  // 🔥 reset everything
+  csrfToken = null;
+
   return res.json();
 };

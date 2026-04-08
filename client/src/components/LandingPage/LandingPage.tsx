@@ -1,11 +1,12 @@
-import logo from "../../assets/logo.png";
-import image from "../../assets/beren-sutton-cleaver-ZOxnd4HmWXE-unsplash.jpg";
 import { IoEyeOffOutline } from "react-icons/io5";
 import { IoEyeOutline } from "react-icons/io5";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { login, signup } from "../../services/authService";
 import type { UserData } from "../../types/userData";
+import "./LandingPage.css";
+import { FaBookOpen, FaGlobeAmericas, FaMapMarkedAlt } from "react-icons/fa";
+import { useAuth } from "../../context/authContext";
 
 export default function LandingPage() {
   const [name, setName] = useState("");
@@ -14,6 +15,7 @@ export default function LandingPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { setIsAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +38,7 @@ export default function LandingPage() {
         await login({ email, password } as UserData);
         setEmail("");
         setPassword("");
+        setIsAuthenticated(true);
         navigate("/dashboard");
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -73,32 +76,62 @@ export default function LandingPage() {
     setError(null);
   };
 
+  const features = [
+    {
+      icon: FaGlobeAmericas,
+      title: "Explore literature by country",
+      description:
+        "Click anywhere on the world map to discover books connected to that nation’s literary tradition.",
+    },
+    {
+      icon: FaBookOpen,
+      title: "Build your global reading list",
+      description:
+        "Save recommendations and organize them into 'Read' and 'To Be Read' as you plan your literary journey.",
+    },
+    {
+      icon: FaMapMarkedAlt,
+      title: "Track your progress visually",
+      description:
+        "Watch countries light up as you read, turning your reading habits into a global map of exploration.",
+    },
+  ];
+
   return (
     <div className="auth-page-body">
       {/* Left side: Login form */}
-      <div className="auth-left">
-        <div className="auth-image-div">
-          <img
-            src={image}
-            alt="Landing page image of a group of people walking on the beach at sunset"
-            className="auth-image"
-          />
+      <div className="landing-left">
+        <div>
+          <h1 className="landing-title">LITLAS</h1>
         </div>
+
+        <div className="landing-features">
+          {features.map((f) => (
+            <div key={f.title} className="feature-item">
+              <f.icon className="feature-icon" />
+              <div>
+                <h3 className="feature-title">{f.title}</h3>
+                <p className="feature-description">{f.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p className="landing-footer">
+          © {new Date().getFullYear()} LITLAS. All rights reserved.
+        </p>
       </div>
 
       {/* Right side: Login form */}
       <div className="auth-right">
-        <div className="auth-logo">
-          <img src={logo} alt="Litlas logo" />
-        </div>
         <div className="auth-form-div">
           <h1 className="auth-form-title">
             {isLogin ? "Welcome back" : "Create an account"}
           </h1>
           <h2 className="auth-form-subtitle">
             {isLogin
-              ? "Sign in to keep planning your next adventure"
-              : "Sign up to start planning your next adventure"}
+              ? "Sign in to continue your literary journey"
+              : "Sign up to start your literary journey"}
           </h2>
           {error && (
             <div role="alert" className="alert-message">

@@ -1,0 +1,257 @@
+:root {
+  --gradient-brand: linear-gradient(
+    135deg,
+    #0f172a 0%,
+    #1e293b 25%,
+    #243447 50%,
+    #2f5f8f 75%,
+    #3a6ea5 100%
+  );
+  --color-secondary: #ffffff;
+}
+
+.auth-page-body {
+  display: flex;
+  height: 100vh;
+}
+
+.auth-left {
+  display: none;
+  flex: 1;
+}
+
+@media (min-width: 1024px) {
+  .auth-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.auth-image-div {
+  width: 100%;
+  height: 100%;
+}
+
+.auth-image {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  object-position: 25% 40%;
+}
+
+.auth-right {
+  position: relative;
+  width: 100%;
+  background-color: #fbf9f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .auth-right {
+    width: 50%;
+  }
+}
+
+.auth-form-div {
+  width: 100%;
+  max-width: 420px;
+  padding: 0 1rem;
+}
+
+.auth-form-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0;
+  color: #111827;
+}
+
+.auth-form-subtitle {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  color: #111827;
+  font-weight: 500;
+}
+
+.alert-message {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #dc2626;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.input-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000000;
+}
+
+.input-box {
+  margin-top: 0.25rem;
+  padding: 0.5rem;
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  color: #111827;
+  transition: all 0.3s ease;
+}
+
+.input-box::placeholder {
+  color: #9ca3af;
+}
+
+.input-box:focus {
+  outline: none;
+  border-color: #e5e7eb;
+  box-shadow: 0 0 0 2px #d1d5db;
+}
+
+.relative {
+  position: relative;
+}
+
+.show-hide-btn {
+  position: absolute;
+  right: 0.5rem;
+  top: 3rem;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #393b40;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #243447;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-btn:hover {
+  background-color: #2f5f8f;
+}
+
+.auth-btn:focus {
+  outline: none;
+  background-color: #243447;
+  box-shadow: 0 0 0 2px #d1d5db;
+}
+
+.switch-page-div {
+  margin-top: 1rem;
+  font-size: 1rem;
+  text-align: center;
+  color: #4b505a;
+}
+
+.switch-page-btn {
+  color: #111827;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.switch-page-btn:hover {
+  text-decoration: underline;
+}
+
+.landing-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.landing-left {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .landing-left {
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3rem;
+    background: var(--gradient-brand);
+    color: var(--color-secondary);
+    position: relative;
+    overflow: hidden;
+  }
+}
+
+.landing-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  background: linear-gradient(to right, #ffffff, #c7d2fe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--color-secondary);
+}
+
+.landing-features {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.feature-icon {
+  margin-top: 0.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--color-secondary);
+}
+
+.feature-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+}
+
+.feature-description {
+  font-size: 01rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.867);
+  max-width: 420px;
+}
+
+.landing-footer {
+  font-size: 0.75rem;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+  color: rgba(255, 255, 255, 0.634);
+  margin-top: 2rem;
+}
