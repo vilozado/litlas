@@ -59,7 +59,6 @@ redisClient.on("error", (err) => console.error("Redis error:", err));
     app.use(cookieParser(process.env.SESSION_SECRET!)); //cookie parser
     app.use(
       session({
-        //store session cookies for auth
         secret: process.env.SESSION_SECRET!,
         name: "sid",
         resave: false,
@@ -75,9 +74,8 @@ redisClient.on("error", (err) => console.error("Redis error:", err));
       }),
     );
 
-    //routes
     app.get("/get-csrf-token", (req, res) => {
-      if (!req.session.id || req.session.isNew) {
+      if (!req.session.uid) {
         req.session.csrfInit = true;
         req.session.save((err) => {
           if (err) return res.status(500).json({ msg: "Session error" });
@@ -95,7 +93,6 @@ redisClient.on("error", (err) => console.error("Redis error:", err));
     app.use("/auth", doubleCsrfProtection, authRouter);
     app.use("/dashboard", authMiddleware, userRouter);
 
-    //initialization
     app.listen(PORT, () =>
       console.log(`Server running on http://localhost:${PORT}`),
     );

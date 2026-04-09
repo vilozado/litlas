@@ -25,7 +25,6 @@ const authFetch = async (url: string, user: object, retry = true) => {
     body: JSON.stringify(user),
   });
 
-  // If 403, token might be stale — reset and retry once
   if (res.status === 403 && retry) {
     csrfToken = null;
     return authFetch(url, user, false);
@@ -39,7 +38,6 @@ const authFetch = async (url: string, user: object, retry = true) => {
   return res.json();
 };
 
-// ✅ SIGNUP
 export const signup = async (user: {
   name: string;
   email: string;
@@ -48,18 +46,14 @@ export const signup = async (user: {
   return authFetch(`${auth_url}/signup`, user);
 };
 
-// ✅ LOGIN (🔥 refresh token AFTER login)
 export const login = async (user: { email: string; password: string }) => {
   const res = await authFetch(`${auth_url}/login`, user);
-
-  // 🔥 IMPORTANT: session changed → reset token
   csrfToken = null;
-  await getCSRFToken(); // fetch new token tied to new session
+  await getCSRFToken();
 
   return res;
 };
 
-// ✅ LOGOUT
 export const logout = async () => {
   const token = await getCSRFToken();
 
@@ -74,9 +68,7 @@ export const logout = async () => {
   if (!res.ok) {
     throw new Error(`Logout failed: ${res.status}`);
   }
-
-  // 🔥 reset everything
   csrfToken = null;
-
+  await getCSRFToken();
   return res.json();
 };
