@@ -1,11 +1,13 @@
 import { Request, RequestHandler, Response } from "express";
 import Book from "../models/book";
+import { Types } from "mongoose";
 
 type BooksbySubjectQuery = {
   subject?: string;
 };
 
 type AddBookBody = {
+  userId: Types.ObjectId;
   id: string;
   subject: string;
   title: string;
@@ -40,7 +42,7 @@ const getBooksBySubject: RequestHandler<
 
 const getBookList = async (req: Request, res: Response) => {
   try {
-    const savedBooks = await Book.find({});
+    const savedBooks = await Book.find({ userId: req.user!.id });
     res.status(200).json(savedBooks);
   } catch (error) {
     res.status(500).json(error);
@@ -52,6 +54,7 @@ const addBookToList: RequestHandler<{}, unknown, AddBookBody> = async (
   res: Response,
 ) => {
   const {
+    userId,
     id,
     subject,
     title,
@@ -67,6 +70,7 @@ const addBookToList: RequestHandler<{}, unknown, AddBookBody> = async (
   }
   try {
     const added = await Book.create({
+      userId: req.user!.id,
       id: id,
       subject: subject,
       title: title,
@@ -88,7 +92,7 @@ const updateBook = async (req: Request, res: Response) => {
 
   try {
     const updatedBook = await Book.findOneAndUpdate(
-      { id: id },
+      { id: id, userId: req.user!.id },
       { $set: { status: req.body.status } },
       { returnDocument: "after" },
     );
@@ -104,7 +108,7 @@ const updateBook = async (req: Request, res: Response) => {
 const removeBook = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
-    await Book.findOneAndDelete({ id: id });
+    await Book.findOneAndDelete({ id: id, userId: req.user!.id });
     res.status(200).json();
   } catch (error) {
     res.status(500).json(error);

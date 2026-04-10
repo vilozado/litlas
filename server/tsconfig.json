@@ -30,6 +30,7 @@
     // "noPropertyAccessFromIndexSignature": true,
     // Recommended Options
     "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
     "strict": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,

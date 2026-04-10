@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const bookSchema = new Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   id: {
     type: String,
     required: true,
